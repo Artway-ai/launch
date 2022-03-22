@@ -11,7 +11,7 @@ setup(name='launch',
       packages=find_packages(),
       entry_points={
             'console_scripts': [
-                'launch = launch.__main__:launch'
+                'launch = launch.main:launch'
             ]
         },
      )

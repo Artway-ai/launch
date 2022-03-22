@@ -1,11 +1,11 @@
 # Copyright 2022 kuizhiqing
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -43,6 +43,15 @@ class Master(object):
 
     def stop(self):
         raise NotImplementedError
+
+    def set_status(self, status):
+        pass
+
+    def get_status(self):
+        return None
+
+    def restart_peer(self):
+        pass
 
     def sync_peers(self, prefix, key, value, size, rank=-1) -> (list, int):
         raise NotImplementedError
@@ -123,7 +132,7 @@ class HTTPMaster(Master):
         if size < 2:
             return [value], 0
 
-        self.ctx.logger.info("Waiting peer ready...")
+        self.ctx.logger.info("Waiting peer start...")
 
         self.lazy_init()
 
@@ -185,7 +194,7 @@ class ETCDMaster(Master):
         if size < 2:
             return [value], 0
 
-        self.ctx.logger.info("Waiting peer ready...")
+        self.ctx.logger.info("Waiting peer start...")
 
         path = "{}/{}/{}".format(prefix, key, rank)
 

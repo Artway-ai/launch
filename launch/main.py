@@ -12,6 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .main import launch
+from .context import Context
+from . import controllers
 
-launch()
+
+def launch():
+    # initialize the context to run
+    ctx = Context()
+
+    if ctx.is_legacy_mode():
+
+        # legacy mode
+        raise Exception('No legacy mode defined')
+
+    else:
+
+        # initialize the selected controller
+        c = controllers.init(ctx)
+
+        # run the pods
+        c.run()
+
+        # manager or just wait pod
+        c.finalize()
+
+
+if __name__ == "__main__":
+    launch()
